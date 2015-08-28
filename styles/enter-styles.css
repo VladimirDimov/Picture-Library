@@ -78,7 +78,25 @@ nav{
 	height: 600px;
 	overflow-y: scroll;
 }
-nav #albums-container{
-	
+
+nav ul {
+	list-style-type: none;
+	padding: 2px;
+}
+nav li{
+	padding: 5px 0;
+	border: 1px solid black;
+	margin-top: 2px;
+}
+
+nav li:hover{
+	background-color: blue;
+	cursor: pointer;
 }
 /*==============*/
+
+.centered-on-window{
+	display: block;
+	position: absolute;
+	background-color: red;
+}
