@@ -3,6 +3,34 @@
 	padding: 0;
 }
 
+body{
+	padding-left: 100px;
+}
+
+/*Header*/
+header{
+	position: relative;
+	background-color: pink;
+	height: 100px;
+	width: 900px;
+}
+	
+div#logo{
+	display: inline-block;	
+	float: left;
+	margin-top: 30px;
+}
+
+div#logo p{
+	font-size: 18px;
+}
+
+div#logout{
+	float: right;
+	margin-top: 5px;	
+}
+/*===============*/
+
 #wrapper{
 	width: 900px;
 	height: 600px;
@@ -42,3 +70,15 @@ label{
 	width: 150px;
 	text-align: right;
 }
+
+/*user-home-page*/
+nav{
+	border: 1px solid black;
+	width: 150px;
+	height: 600px;
+	overflow-y: scroll;
+}
+nav #albums-container{
+	
+}
+/*==============*/
