@@ -8,7 +8,7 @@ function loader(album) {
 		contentType: 'text/html',
 		success: function (response) {
 			$('#album-container').empty();
-
+			
 			$('#album-container').append(response);
 			$('h1').html(album.get('title'));
 
@@ -46,6 +46,15 @@ function loader(album) {
 					newImage.save({
 						success: function () {
 							console.log('File successfully uploaded!');
+							var relation = album.relation('images');
+							relation.add(newImage);
+							album.save({
+								success: function(){
+									$('#album-container').empty();
+									getImages(album);
+								}
+							});
+							//End of code
 						},
 						error: function (err) {
 							console.log(err.message);
