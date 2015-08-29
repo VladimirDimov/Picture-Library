@@ -1,6 +1,7 @@
 var constants = require('script/constants').constants();
 var startPage = require('script/start-page');
 var validator = require('script/validator').validator;
+var albumContentHolder = require('script/album-content');
 
 var loader = function () {
 	$.ajax('../html/user-home-page.html', {
@@ -112,6 +113,10 @@ var loader = function () {
 			$albumBox.addClass('list-group-item');
 			$albumBox.html(albums[i].get('title'));
 			$albumsContainer.append($albumBox);
+			
+			$albumBox.click(function(){
+				albumContentHolder.loader(albums[i]);
+			});
 		}
 
 		return $albumsContainer;
