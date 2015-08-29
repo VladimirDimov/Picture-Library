@@ -12,9 +12,15 @@ var loadStartPage = function () {
 	
 	appendEventsToButtons();
 	
+	updateHiddenItems();
+	
 	if (Parse.User.current()) {
 		userHomePage.loader();
 		return;
+	}
+	
+	function updateHiddenItems(){
+		$('#add-new-album').hide();
 	}
 
 	// $.ajax('../html/start-page.html', {

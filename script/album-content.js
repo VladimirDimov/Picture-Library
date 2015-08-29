@@ -7,16 +7,24 @@ function loader(album) {
 		timeout: 5000,
 		contentType: 'text/html',
 		success: function (response) {
-			$('#album-container').empty();
+			$('#album-container').empty();		
+
 			$('#album-container').append(response);
+			$('h1').html(album.get('title'));
 			
 			getImages(album);
-
 		},
 		error: function (error) {
 			throw new Error('Unable to find html file: album-content.html');
 		}
-	});
+	}).then(appendEventhandlers);
+	
+	function appendEventhandlers(){
+		$('#btn-add-image').click(function(){
+			// TODO;
+			console.log('ready');			
+		});
+	}
 
 	function getImages(album) {
 		var relation = album.relation("images");

@@ -2,6 +2,7 @@ var constants = require('script/constants').constants();
 var startPage = require('script/start-page');
 var validator = require('script/validator').validator;
 var loadAlbumContent = require('script/album-content');
+var q = require('node_modules/q/q.js');
 
 var loader = function () {
 	$.ajax('../html/user-home-page.html', {
@@ -14,6 +15,7 @@ var loader = function () {
 			$('#user-home-page').hide();
 			$('#user-home-page').fadeIn(constants.FADEIN_TIME);
 
+			showHiddenItems();
 			loadAlbums();
 		},
 		error: function (error) {
@@ -22,27 +24,15 @@ var loader = function () {
 	}).then(addEventsToButtons);
 
 	function addEventsToButtons() {
-		$('#add-album').click(function () {
-			var addAlbumContainer = $('#add-album-container');
-			if (addAlbumContainer.length === 0) {
-				$.ajax('../html/add-album.html', {
-					type: 'GET',
-					timeout: 5000,
-					contextType: 'text/html',
-					success: function (response) {
-						$('#wrapper').append(response);
-						appendEventsToAddAlbumButtons();
-					},
-					error: function (error) {
-						console.log(error.message);
-						return;
-					}
-				});
-			}
-			else {
-				addAlbumContainer.fadeIn(constants.FADEIN_TIME);
-			}
+		$('#add-new-album').click(function () {
+			$('#add-album-container').fadeIn(constants.FADEIN_TIME);
 		});
+		
+		appendEventsToAddAlbumButtons();
+	}
+
+	function showHiddenItems() {
+		$('#add-new-album').show();
 	}
 
 	function appendEventsToAddAlbumButtons() {
@@ -53,7 +43,7 @@ var loader = function () {
 			var description = $('#add-album-container #description').val();
 			createNewAlbum(title, description, Parse.User.current());
 			$container.fadeOut(constants.FADEOUT_TIME);
-			loadAlbums();
+			loader();
 		});
 
 		$('#add-album-container #button-cancel').click(function (event) {
@@ -79,8 +69,8 @@ var loader = function () {
 				var relation = owner.relation("albums");
 				relation.add(newAlbum);
 				owner.save();
-				console.log('Album successfuly saved.');
 				loadAlbums();
+				console.log('Album successfuly saved.');
 			},
 			error: function (error) {
 				console.log(error.message);
@@ -92,19 +82,24 @@ var loader = function () {
 	var userToAlbumsRelation = currentUser.relation("albums");
 	var userToAlbumsQuery = userToAlbumsRelation.query();
 	var userAlbums;
-	userToAlbumsQuery.find({
-		success: function (list) {
-			// list contains all albums of the current user
-			userAlbums = list;
-		}
-	});
+
+	function updateAlbumsDataBase() {
+		userToAlbumsQuery.find({
+			success: function (list) {
+				// list contains all albums of the current user
+				userAlbums = list;
+			}
+		});
+	}
 
 	function loadAlbums() {
+		updateAlbumsDataBase();
 		userToAlbumsQuery.find({
 			success: function (list) {
 				// list contains all albums of the current user
 				var $albumsContainer = getAlbumsContainer(userAlbums);
 
+				$('#albums-container').empty();
 				$('#albums-container').append($albumsContainer);
 			}
 		});
@@ -122,12 +117,12 @@ var loader = function () {
 			$albumBox.attr('data', albums[i].id);
 			$albumsContainer.append($albumBox);
 
-			$albumBox.click(function (ev) {				
+			$albumBox.click(function (ev) {
 				var albumId = $(this).attr('data');
-				var selectedAlbum = userAlbums.filter(function(item){
+				var selectedAlbum = userAlbums.filter(function (item) {
 					return item.id === albumId;
 				})[0];
-				
+
 				loadAlbumContent.loader(selectedAlbum);
 			});
 		}
