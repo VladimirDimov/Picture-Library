@@ -122,6 +122,8 @@ var loader = function () {
 				var selectedAlbum = userAlbums.filter(function (item) {
 					return item.id === albumId;
 				})[0];
+				
+				sessionStorage.setItem('selectedAlbum', selectedAlbum.id);
 
 				loadAlbumContent.loader(selectedAlbum);
 			});
