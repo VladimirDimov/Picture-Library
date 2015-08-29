@@ -1,7 +1,7 @@
 var constants = require('script/constants').constants();
 var startPage = require('script/start-page');
 var validator = require('script/validator').validator;
-var albumContentHolder = require('script/album-content');
+var loadAlbumContent = require('script/album-content');
 
 var loader = function () {
 	$.ajax('../html/user-home-page.html', {
@@ -88,15 +88,22 @@ var loader = function () {
 		});
 	}
 
+	var currentUser = Parse.User.current();
+	var userToAlbumsRelation = currentUser.relation("albums");
+	var userToAlbumsQuery = userToAlbumsRelation.query();
+	var userAlbums;
+	userToAlbumsQuery.find({
+		success: function (list) {
+			// list contains all albums of the current user
+			userAlbums = list;
+		}
+	});
+
 	function loadAlbums() {
-		var user = Parse.User.current();
-		var relation = user.relation("albums");
-		var query = relation.query();
-		// query.equalTo("id", user.id);
-		query.find({
+		userToAlbumsQuery.find({
 			success: function (list) {
 				// list contains all albums of the current user
-				var $albumsContainer = getAlbumsContainer(list);
+				var $albumsContainer = getAlbumsContainer(userAlbums);
 
 				$('#albums-container').append($albumsContainer);
 			}
@@ -112,10 +119,16 @@ var loader = function () {
 			var $albumBox = $('<button>');
 			$albumBox.addClass('list-group-item');
 			$albumBox.html(albums[i].get('title'));
+			$albumBox.attr('data', albums[i].id);
 			$albumsContainer.append($albumBox);
-			
-			$albumBox.click(function(){
-				albumContentHolder.loader(albums[i]);
+
+			$albumBox.click(function (ev) {				
+				var albumId = $(this).attr('data');
+				var selectedAlbum = userAlbums.filter(function(item){
+					return item.id === albumId;
+				})[0];
+				
+				loadAlbumContent.loader(selectedAlbum);
 			});
 		}
 
