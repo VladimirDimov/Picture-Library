@@ -6,7 +6,7 @@
   <title>My Parse App</title>
   <meta name="description" content="My Parse App">
   <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="../styles/enter-styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../bootstrap-3.3.5-dist/css/bootstrap.css">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.js"></script>
@@ -19,17 +19,36 @@
     Parse.initialize("0UAEAz93oOwwQW35zd24Q4BcMkCiQvWEq01zNPcM", "CcFglSNmVyhCVCcemut6ilHu7J9TLFER3HEQt2zB");
     System.import('../script/start-page.js');
   </script>
-  <header>
-    <div id="logo">
+  <!--<header class="navbar navbar-inverse">
+    <div id="logo" class="pull-left">
       <p>Image Library</p>
     </div>
-    <div id="logout">
+    <div id="logout" class="pull-right">
       <span id="current-user">Current user</span>
       <a href="#" id="button-logout" class="btn btn-info btn-lg text-right">Logout</a>
     </div>
-  </header>
-  <div id="wrapper">
-
+  </header>-->
+  <nav id="start-page" class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/html/index.html">Image Library</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Page 1</a></li>
+        <li><a href="#">Page 2</a></li>
+        <li><a href="#">Page 3</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a id="button-register-dialog" href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a id="button-login-dialog" href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a id="button-logout" href="#"><span class="glyphicon glyphicon-log-in"></span> Sign Out</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  <div id="wrapper" class="container-fluid">
   </div>
 </body>
 

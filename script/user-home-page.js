@@ -97,18 +97,19 @@ var loader = function () {
 				// list contains all albums of the current user
 				var $albumsContainer = getAlbumsContainer(list);
 
-				$('nav#navigation').append($albumsContainer);
+				$('#albums-container').append($albumsContainer);
 			}
 		});
 	}
 
 	function getAlbumsContainer(albums) {
 		var numberOfAlbums = albums.length;
-		var $albumsContainer = $('#albums-list');
+		var $albumsContainer = $('<div>');
 		$albumsContainer.empty();
 
 		for (var i = 0; i < numberOfAlbums; i++) {
-			var $albumBox = $('<li>');
+			var $albumBox = $('<button>');
+			$albumBox.addClass('list-group-item');
 			$albumBox.html(albums[i].get('title'));
 			$albumsContainer.append($albumBox);
 		}
