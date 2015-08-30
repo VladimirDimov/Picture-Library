@@ -1,18 +1,9 @@
-<div id="login-container" class="container text-center vertical-center container-fluid">
+<form class="login-container" id="login-container">
 	<h2 class="form-signin-heading">Please sign in</h2>
-	<div>
-		<label for="username" class="sr-only">Username: </label>
-		<input type="text" id="username" class="form-control">
-	</div>
-	<div>
-		<label for="password" class="sr-only">Password: </label>
-		<input type="password" id="password" class="form-control">
-	</div>
-	<div id="error-message">
-		
-	</div>
-	<div class="buttons-container">
-		<button id="button-login" class="btn btn-primary">LogIn</button>
-		<button id="button-back" class="btn btn-primary">Back</button>
-	</div>
-</div>
+	<label for="username" class="sr-only">Username:</label>
+	<input id="username" type="text" class="form-control" placeholder="Username" required autofocus>
+	<label for="password" class="sr-only">Password</label>
+	<input id="password" type="password" class="form-control" placeholder="Password" required>
+	<br>
+	<button id="button-login" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</form>
