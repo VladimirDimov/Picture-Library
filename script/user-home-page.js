@@ -27,7 +27,7 @@ var loader = function () {
 		$('#add-new-album').click(function () {
 			$('#add-album-container').fadeIn(constants.FADEIN_TIME);
 		});
-		
+
 		appendEventsToAddAlbumButtons();
 	}
 
@@ -51,6 +51,10 @@ var loader = function () {
 			console.log('cancel');
 
 			$container.fadeOut(constants.FADEOUT_TIME);
+		});
+
+		$('#toggle-albums').click(function (event) {
+			$('#albums-container').toggle(1000);
 		});
 	}
 
@@ -84,12 +88,15 @@ var loader = function () {
 	var userAlbums;
 
 	function updateAlbumsDataBase() {
+		var d = q.defer();
 		userToAlbumsQuery.find({
 			success: function (list) {
 				// list contains all albums of the current user
 				userAlbums = list;
+				d.resolve(list);
 			}
 		});
+		return d.promise;
 	}
 
 	function loadAlbums() {
@@ -97,10 +104,14 @@ var loader = function () {
 		userToAlbumsQuery.find({
 			success: function (list) {
 				// list contains all albums of the current user
-				var $albumsContainer = getAlbumsContainer(userAlbums);
-
-				$('#albums-container').empty();
-				$('#albums-container').append($albumsContainer);
+				
+				var $albumsContainer;
+				q.fcall(updateAlbumsDataBase).then(function (promiseedValue) {
+					$albumsContainer = getAlbumsContainer(userAlbums);
+				}).then(function (promise) {
+					$('#albums-container').empty();
+					$('#albums-container').append($albumsContainer);
+				})
 			}
 		});
 	}
@@ -122,10 +133,12 @@ var loader = function () {
 				var selectedAlbum = userAlbums.filter(function (item) {
 					return item.id === albumId;
 				})[0];
-				
+
 				sessionStorage.setItem('selectedAlbum', selectedAlbum.id);
 
 				loadAlbumContent.loader(selectedAlbum);
+
+				$('#albums-container').toggle(1000);
 			});
 		}
 
