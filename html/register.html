@@ -1,4 +1,4 @@
-<div id="register-container" class="container text-center vertical-center">
+<!--<div id="register-container" class="container text-center vertical-center">
 	<div>
 		<label for="username">Username: </label>
 		<input type="text" id="username" class="form-control">
@@ -15,4 +15,17 @@
 		<button id="button-register" class="btn btn-primary">Register</button>
 		<button id="button-back" class="btn btn-primary">Back</button>
 	</div>
-</div>
+</div>-->
+
+// Improved
+<form id="register-container" class="container text-center vertical-center">
+	<h2 class="form-signin-heading">Please register</h2>
+	<label for="username" class="sr-only">Username:</label>
+	<input id="username" type="text" class="form-control" placeholder="Username" required autofocus>
+	<label for="password" class="sr-only">Password</label>
+	<input id="password-first" type="password" class="form-control" placeholder="Password" required>
+	<label for="password" class="sr-only">Repeat password</label>
+	<input id="password-second" type="password" class="form-control" placeholder="Repeat password" required>
+	<br>
+	<button id="button-register" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</form>
