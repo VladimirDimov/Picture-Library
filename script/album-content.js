@@ -1,14 +1,14 @@
 var handlebars = require('node_modules/handlebars/dist/handlebars.js');
 var q = require('node_modules/q/q.js');
 
-function loader(album) {	
+function loader(album) {
 	$.ajax('../html/album-content.html', {
 		type: 'GET',
 		timeout: 5000,
 		contentType: 'text/html',
 		success: function (response) {
 			$('#album-container').empty();
-			
+
 			$('#album-container').append(response);
 			$('h1').html(album.get('title'));
 
@@ -21,17 +21,13 @@ function loader(album) {
 
 	function appendEventhandlers() {
 		$('#btn-upload-image').click(function () {
-			
+
 			var fileElement = $('#btn-add-image')[0];
 			var filePath = $('#btn-add-image').val();
 			var fileName = filePath.split('\\').pop();
 
 			if (fileElement.files.length > 0) {
 				var file = fileElement.files[0];
-
-				var Image = Parse.Object.extend('Image');
-				var newImage = new Image();
-				newImage.set('album', album);
 
 				var newFile = new Parse.File(fileName, file);
 				newFile.save({
@@ -42,6 +38,11 @@ function loader(album) {
 						console.log(err.message);
 					}
 				}).then(function (uploadedFile) {
+					var Image = Parse.Object.extend('Image');
+					var newImage = new Image();
+					var imageTitle = fileName.split('.')[0];
+					newImage.set('album', album);
+					newImage.set('title', imageTitle);
 					newImage.set('file', uploadedFile);
 					newImage.save({
 						success: function () {
@@ -49,12 +50,11 @@ function loader(album) {
 							var relation = album.relation('images');
 							relation.add(newImage);
 							album.save({
-								success: function(){
-									$('#album-container').empty();
+								success: function () {
+									$('#thumbnails-container').empty();
 									getImages(album);
 								}
 							});
-							//End of code
 						},
 						error: function (err) {
 							console.log(err.message);
@@ -68,7 +68,7 @@ function loader(album) {
 	function getAlbumById(id) {
 		var Album = Parse.Object.extend("Album");
 		var query = new Parse.Query(Album);
-		
+
 		query.equalTo("objectId", id);
 
 		query.first({
@@ -99,6 +99,7 @@ function loader(album) {
 		images = images.map(function (item) {
 			var modifiedItem = {};
 			modifiedItem.location = item._serverData.file.url();
+			modifiedItem.title = item._serverData.title;
 			return modifiedItem;
 		});
 		var data = {};

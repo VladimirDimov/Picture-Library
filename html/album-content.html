@@ -1,28 +1,32 @@
 <div class="container">
-
-    <div class="row">
-
-        <div class="col-lg-12">
-            <h1 class="page-header">Album Title</h1>
-        </div>
-
-        <div class="col-lg-12">
-            <input type="file" class="btn btn-primary" id="btn-add-image" style="display: inline-block">
-            <input type="button" class="btn btn-primary" id="btn-upload-image" value="Upload">
-            <hr>
-        </div>
-
-        <script type="text/x-handlebars-template" id="thumbnail">
-            {{#images}}
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="{{location}}" alt="">
-                </a>
-            </div>
-            {{/images}}
-        </script>
-
-        <div id="thumbnails-container"></div>
+    <div class="col-lg-12">
+        <h1 class="page-header">Album Title</h1>
     </div>
 
-    <hr>
+    <div class="col-lg-12">
+        <input type="file" class="btn btn-primary" id="btn-add-image" style="display: inline-block">
+        <input type="button" class="btn btn-primary" id="btn-upload-image" value="Upload">
+        <hr>
+    </div>
+
+    <script type="text/x-handlebars-template" id="thumbnail">
+        <div class="row">
+            <div class="image-set">
+                {{#images}}
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a class="thumbnail" href="{{location}}" data-title="caption" data-lightbox="Album title">
+                        <img class="img-thumbnail img-responsive" src="{{location}}" width="200px">
+                        <p class="label label-default">{{title}}</p>
+                    </a>
+                </div>
+                {{/images}}
+            </div>
+        </div>
+    </script>
+
+    <div id="thumbnails-container" class="gallery">
+        <!--The thumbnails shall be appended here by handlebars-->
+    </div>
+
+</div>
+<hr>
