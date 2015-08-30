@@ -11,16 +11,16 @@
 
     <script type="text/x-handlebars-template" id="thumbnail">
         <div class="row">
-            <div class="image-set">
-                {{#images}}
-                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                    <a class="thumbnail" href="{{location}}" data-title="caption" data-lightbox="Album title">
-                        <img class="img-thumbnail img-responsive" src="{{location}}" width="200px">
-                        <p class="label label-default">{{title}}</p>
-                    </a>
-                </div>
-                {{/images}}
+
+            {{#images}}
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="{{location}}" data-title="caption" data-lightbox="Album title">
+                    <img class="img-thumbnail img-responsive" src="{{location}}" width="200px">
+                    <p class="label label-default">{{title}}</p>
+                </a>
             </div>
+            {{/images}}
+
         </div>
     </script>
 
