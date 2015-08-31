@@ -15,7 +15,12 @@
 
             {{#images}}
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="{{location}}" data-title="{{title}}" data-lightbox="Album title">
+                <span class="glyphicon glyphicon-remove delete-image aria-hidden" aria-hidden="true"></span>
+                <div style="display: none;">
+                    <button class="delete-image-yes">delete</button>
+                    <button class="delete-image-cancel">cancel</button>
+                </div>
+                <a class="thumbnail" href="{{location}}" data-title="{{title}}" data-lightbox="Album title" objectId="{{objectId}}">
                     <img class="img-thumbnail img-responsive" src="{{location}}" width="200px">
                     <p class="label label-default">{{title}}</p>
                 </a>
@@ -23,6 +28,7 @@
             {{/images}}
 
         </div>
+
     </script>
 
     <div id="thumbnails-container" class="gallery">

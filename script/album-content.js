@@ -102,11 +102,58 @@ function loader(album) {
 			var modifiedItem = {};
 			modifiedItem.location = item._serverData.file.url();
 			modifiedItem.title = item._serverData.title;
+			modifiedItem.objectId = item.id;
 			return modifiedItem;
 		});
 		var data = {};
 		data.images = images;
+		$('#thumbnails-container').empty();
 		$('#thumbnails-container').append(template(data));
+		appendHandlersToDeleteImageButtons();
+	}
+
+	function appendHandlersToDeleteImageButtons() {
+		$('.delete-image').click(function (ev) {
+			ev.stopPropagation();
+			var $target = $(ev.target);
+			$target.next().fadeIn(1000);
+		});
+
+		$('.delete-image-cancel').click(function (ev) {
+			var $target = $(ev.target);
+			$target.parent().fadeOut(500);
+		});
+
+		$('.delete-image-yes').click(function (ev) {
+			var $target = $(ev.target);
+			var imageId = $target.parent().next().attr('objectId');
+
+			var Image = Parse.Object.extend("Image");
+			var query = new Parse.Query(Image);
+			query.select("objectId", imageId);
+			query.find().then(function (results) {
+				var imageToDelete = results[0];
+
+				imageToDelete.destroy({
+					success: function () {
+						q.fcall(function () {
+							var relation = album.relation("images");
+							relation.remove(imageToDelete);
+							album.save();
+						}).then(function () {
+							getImages(album);
+						}).done();
+
+
+					},
+					error: function (err) {
+						throw new Error('Could not delete image');
+					}
+				});
+
+
+			});
+		});
 	}
 }
 
