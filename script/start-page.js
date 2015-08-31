@@ -5,21 +5,21 @@ var q = require('node_modules/q/q.js');
 var userUpdate = require('script/update-user');
 var userHomePage = require('script/user-home-page');
 
-var loadStartPage = function () {
+var loadStartPage = function() {
 	$('#wrapper').empty();
-	
+
 	userUpdate.updateCurrentUser();
-	
+
 	appendEventsToButtons();
-	
+
 	updateHiddenItems();
-	
+
 	if (Parse.User.current()) {
 		userHomePage.loader('#wrapper');
 		return;
 	}
-	
-	function updateHiddenItems(){
+
+	function updateHiddenItems() {
 		$('#add-new-album').hide();
 	}
 
@@ -39,18 +39,18 @@ var loadStartPage = function () {
 	// })
 	// 	.then(appendEventsToButtons)
 	// 	.then(appendEventToLogoutButton);
-	
+
 
 	function appendEventsToButtons() {
-		$('#button-register-dialog').click(function () {
+		$('#button-register-dialog').on('click', function() {
 			registrator.registrator();
 		});
 
-		$('#button-login-dialog').click(function () {
+		$('#button-login-dialog').on('click', function() {
 			login.login();
 		});
 
-		$('#button-logout').on('click', function () {
+		$('#button-logout').on('click', function() {
 			q.fcall(Parse.User.logOut)
 				.then(loadStartPage)
 				.done();
