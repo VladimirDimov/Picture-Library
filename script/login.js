@@ -38,14 +38,14 @@ var login = function () {
 			var logger = Parse.User.logIn(name, password, {
 				success: function (user) {
 					console.log('Successful logIn');
-					$('#login-container').fadeOut(constants.FADEOUT_TIME, userHomePage.loader);
+					$('#login-container').fadeOut(constants.FADEOUT_TIME, userHomePage.loader('#wrapper'));
 
 				},
 				error: function (user, error) {
 					var $errorContainer = $('<p>');
 
-					$('#error-message')
-						.html('Invalid username or password');
+					$('#password-input-error').show();
+					$('#password-input-error').fadeOut(7000);
 				}
 			})
 				.then(userUpdate.updateCurrentUser);

@@ -17,7 +17,6 @@
 	</div>
 </div>-->
 
-// Improved
 <form id="register-container" class="container text-center vertical-center">
 	<h2 class="form-signin-heading">Please register</h2>
 	<label for="username" class="sr-only">Username:</label>
@@ -26,6 +25,8 @@
 	<input id="password-first" type="password" class="form-control" placeholder="Password" required>
 	<label for="password" class="sr-only">Repeat password</label>
 	<input id="password-second" type="password" class="form-control" placeholder="Repeat password" required>
-	<br>
+	<br>	
+
 	<button id="button-register" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	<div id="password-input-error" class="alert alert-danger btn-lg" role="alert" style="display: none">The second input of the password is different!</div>
 </form>

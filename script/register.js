@@ -20,9 +20,19 @@ var registrator = function() {
 	function appendEvents() {
 		$('#button-register').click(function() {
 			var userToRegister = new Parse.User();
-
+			
+			var passwordFirstInput = $('#password-first').val();
+			var passwordSecondInput = $('#password-second').val();
+			
+			if (passwordFirstInput !== passwordSecondInput) {
+				$('#password-input-error').show();
+				$('#password-input-error').css('position', 'absolute');
+				$('#password-input-error').fadeOut(7000);
+				return;
+			}
+			
 			userToRegister.set('username', $('#username').val());
-			userToRegister.set('password', $('#password-first').val());
+			userToRegister.set('password', passwordFirstInput);
 
 			userToRegister.signUp(null, {
 				success: function(user) {

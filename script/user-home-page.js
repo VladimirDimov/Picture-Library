@@ -4,14 +4,14 @@ var validator = require('script/validator').validator;
 var loadAlbumContent = require('script/album-content');
 var q = require('node_modules/q/q.js');
 
-var loader = function () {
+var loader = function (selector) {
 	$.ajax('../html/user-home-page.html', {
 		type: 'GET',
 		timeout: 5000,
 		contentType: 'text/html',
 		success: function (response) {
-			$('#wrapper').empty();
-			$('#wrapper').append(response);
+			$(selector).empty();
+			$(selector).append(response);
 			$('#user-home-page').hide();
 			$('#user-home-page').fadeIn(constants.FADEIN_TIME);
 
