@@ -6,7 +6,7 @@ var q = require('node_modules/q/q.js');
 
 var loader = function (selector) {
 	var currentUser = Parse.User.current();
-	
+
 	$.ajax('../html/user-home-page.html', {
 		type: 'GET',
 		timeout: 5000,
@@ -14,7 +14,7 @@ var loader = function (selector) {
 		success: function (response) {
 			$(selector).empty();
 			$(selector).append(response);
-			
+
 			$('#user-home-page').hide();
 			$('#user-home-page').fadeIn(constants.FADEIN_TIME);
 			$('#current-user').html('User: ' + currentUser._serverData.username);
@@ -85,7 +85,7 @@ var loader = function (selector) {
 			}
 		});
 	}
-	
+
 	var userToAlbumsRelation = currentUser.relation("albums");
 	var userToAlbumsQuery = userToAlbumsRelation.query();
 	var userAlbums;
@@ -115,6 +115,11 @@ var loader = function (selector) {
 					$('#albums-container').empty();
 					$('#albums-container').append($albumsContainer);
 				})
+				
+				$('#toggle-albums').unbind();
+				$('#toggle-albums').click(function (event) {
+					$('#albums-container').toggle(1000);
+				});
 			}
 		});
 	}
@@ -141,7 +146,7 @@ var loader = function (selector) {
 
 				loadAlbumContent.loader(selectedAlbum);
 
-				$('#albums-container').toggle(1000);
+				$('#albums-container').fadeOut(1000);
 			});
 		}
 
