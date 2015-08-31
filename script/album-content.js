@@ -110,6 +110,9 @@ function loader(album) {
 		$('#thumbnails-container').empty();
 		$('#thumbnails-container').append(template(data));
 		appendHandlersToDeleteImageButtons();
+
+		$('.img-thumbnail').css('width', '200px');
+		$('.img-thumbnail').css('height', '170px');
 	}
 
 	function appendHandlersToDeleteImageButtons() {
