@@ -5,6 +5,8 @@ var loadAlbumContent = require('script/album-content');
 var q = require('node_modules/q/q.js');
 
 var loader = function (selector) {
+	var currentUser = Parse.User.current();
+	
 	$.ajax('../html/user-home-page.html', {
 		type: 'GET',
 		timeout: 5000,
@@ -12,8 +14,10 @@ var loader = function (selector) {
 		success: function (response) {
 			$(selector).empty();
 			$(selector).append(response);
+			
 			$('#user-home-page').hide();
 			$('#user-home-page').fadeIn(constants.FADEIN_TIME);
+			$('#current-user').html('User: ' + currentUser._serverData.username);
 
 			showHiddenItems();
 			loadAlbums();
@@ -81,8 +85,7 @@ var loader = function (selector) {
 			}
 		});
 	}
-
-	var currentUser = Parse.User.current();
+	
 	var userToAlbumsRelation = currentUser.relation("albums");
 	var userToAlbumsQuery = userToAlbumsRelation.query();
 	var userAlbums;

@@ -5,6 +5,8 @@ var userUpdate = require('script/update-user');
 var q = require('node_modules/q/q.js');
 
 var login = function () {
+	$('#add-new-album').hide();
+	
 	$.ajax('../html/login.html', {
 		type: 'GET',
 		timeout: 5000,

@@ -15,7 +15,7 @@ var loadStartPage = function () {
 	updateHiddenItems();
 	
 	if (Parse.User.current()) {
-		userHomePage.loader();
+		userHomePage.loader('#wrapper');
 		return;
 	}
 	

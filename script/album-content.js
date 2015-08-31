@@ -12,6 +12,7 @@ function loader(album) {
 
 			$('#album-container').append(response);
 			$('h1').html(album.get('title'));
+			$('#album-description').html(album.get('description'));
 
 			getImages(album);
 		},

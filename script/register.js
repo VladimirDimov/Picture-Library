@@ -2,6 +2,8 @@ var constants = require('script/constants').constants();
 var loader = require('script/start-page');
 
 var registrator = function() {
+	$('#add-new-album').hide();
+	
 	$.ajax('../html/register.html', {
 		type: 'GET',
 		timeout: 5000,
