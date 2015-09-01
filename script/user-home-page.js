@@ -144,7 +144,7 @@ var loader = function (selector) {
 
 				sessionStorage.setItem('selectedAlbum', selectedAlbum.id);
 
-				loadAlbumContent.loader(selectedAlbum);
+				loadAlbumContent.loader(selectedAlbum).loadPage();
 
 				$('#albums-container').fadeOut(1000);
 			});
