@@ -25,7 +25,7 @@ var loadStartPage = function() {
 
 	function appendEventsToButtons() {
 		$('#button-register-dialog').on('click', function() {
-			registrator.registrator();
+			registrator.registrator().loadPage();
 		});
 
 		$('#button-login-dialog').on('click', function() {
