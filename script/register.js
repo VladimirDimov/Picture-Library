@@ -29,12 +29,8 @@ var registrator = function() {
 
 			registerUser(username, passwordFirstInput, passwordSecondInput);
 		});
-
-		$('#button-back').click(function() {
-			$('#register-container')
-				.fadeOut(constants.FADEOUT_TIME, loader.loadStartPage);
-		});
 	}
+
 
 	function registerUser(username, passwordFirstInput, passwordSecondInput) {
 		var userToRegister = new Parse.User();
@@ -52,11 +48,17 @@ var registrator = function() {
 		userToRegister.signUp(null, {
 			success: function(user) {
 				console.log('User successfully registered!');
+				loadStartPage();
 			},
 			error: function(user, error) {
 				console.log('Error: ' + error.message);
 			}
 		});
+	}
+
+	function loadStartPage() {
+		$('#register-container')
+			.fadeOut(constants.FADEOUT_TIME, loader.loadStartPage);
 	}
 
 	return {
