@@ -165,7 +165,8 @@ function loader(album) {
 	}
 
 	return {
-		loadPage, deleteImage
+		loadPage: loadPage, 
+		deleteImage: deleteImage
 	}
 }
 

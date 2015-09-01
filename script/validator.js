@@ -10,7 +10,7 @@ var validator = {
 			throw new Error('Invalid string length');
 		}
 	},
-	validateNonEmptyString(value){
+	validateNonEmptyString: function(value){
 		this.validateString(value);
 		if (value.length === 0) {
 			throw new Error('Invalid empty string');			
