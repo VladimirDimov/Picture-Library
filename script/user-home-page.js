@@ -146,7 +146,7 @@ var loader = function (selector) {
 
 				loadAlbumContent.loader(selectedAlbum).loadPage();
 
-				$('#albums-container').fadeOut(1000);
+				$('#albums-container').toggle(1000);
 			});
 		}
 
