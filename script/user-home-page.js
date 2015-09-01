@@ -1,8 +1,8 @@
-var constants = require('script/constants').constants();
-var startPage = require('script/start-page');
-var validator = require('script/validator').validator;
-var loadAlbumContent = require('script/album-content');
-var q = require('node_modules/q/q.js');
+var constants = require('../script/constants').constants();
+var startPage = require('../script/start-page');
+var validator = require('../script/validator').validator;
+var loadAlbumContent = require('../script/album-content');
+var q = require('../node_modules/q/q.js');
 
 var loader = function (selector) {
 	var currentUser = Parse.User.current();

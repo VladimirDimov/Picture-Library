@@ -1,10 +1,10 @@
-var constants = require('script/constants').constants();
-var startPage = require('script/start-page');
-var userHomePage = require('script/user-home-page');
-var userUpdate = require('script/update-user');
-var q = require('node_modules/q/q.js');
+var constants = require('../script/constants').constants();
+var startPage = require('../script/start-page');
+var userHomePage = require('../script/user-home-page');
+var userUpdate = require('../script/update-user');
+var q = require('../node_modules/q/q.js');
 
-var login = function() {
+var login = function () {
 
 	function loadPage() {
 		$('#add-new-album').hide();
@@ -13,7 +13,7 @@ var login = function() {
 			type: 'GET',
 			timeout: 5000,
 			contentType: 'text/html',
-			success: function(response) {
+			success: function (response) {
 				$('#wrapper')
 					.empty()
 					.append(response);
@@ -21,19 +21,19 @@ var login = function() {
 					.hide()
 					.fadeIn(constants.FADEIN_TIME);
 			},
-			error: function(error) {
+			error: function (error) {
 				console.log(error.message);
 			}
 		}).then(appendEventsToButtons);
 	}
 
 	function appendEventsToButtons() {
-		$('#button-back').click(function() {
+		$('#button-back').click(function () {
 			$('#login-container')
 				.fadeOut(constants.FADEOUT_TIME, startPage.loadStartPage);
 		});
 
-		$('#button-login').click(function() {
+		$('#button-login').click(function () {
 			var name = $('#username').val();
 			var password = $('#password').val();
 
@@ -45,12 +45,12 @@ var login = function() {
 		var user = new Parse.User();
 
 		Parse.User.logIn(username, password, {
-			success: function(user) {
+			success: function (user) {
 				console.log('Successful logIn');
 				$('#login-container').fadeOut(constants.FADEOUT_TIME, userHomePage.loader('#wrapper'));
 
 			},
-			error: function(user, error) {
+			error: function (user, error) {
 				var $errorContainer = $('<p>');
 
 				$('#password-input-error').show();
@@ -60,7 +60,8 @@ var login = function() {
 	}
 
 	return {
-		loadPage, logUser
+		loadPage: loadPage,
+		logUser: logUser
 	}
 }
 

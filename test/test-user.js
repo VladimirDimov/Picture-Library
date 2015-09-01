@@ -1,8 +1,8 @@
-var expect = require('node_modules/chai/chai.js').expect;
+var expect = require('chai').expect;
 var registerUser = require('../script/register.js');
 
-describe('Basic test', function(){	
-	it('Should pass if test framework is working', function(){
+describe('Basic test', function () {
+	it('Should pass if test framework is working', function () {
 		expect(true).to.be.true;
 	})
 	

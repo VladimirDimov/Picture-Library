@@ -1,9 +1,9 @@
-var constants = require('script/constants').constants();
-var registrator = require('script/register');
-var login = require('script/login');
-var q = require('node_modules/q/q.js');
-var userUpdate = require('script/update-user');
-var userHomePage = require('script/user-home-page');
+var constants = require('../script/constants').constants();
+var registrator = require('../script/register');
+var login = require('../script/login');
+var q = require('../node_modules/q/q.js');
+var userUpdate = require('../script/update-user');
+var userHomePage = require('../script/user-home-page');
 
 var loadStartPage = function() {
 	$('#wrapper').empty();

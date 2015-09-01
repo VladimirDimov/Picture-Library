@@ -1,6 +1,6 @@
-var handlebars = require('node_modules/handlebars/dist/handlebars.js');
-var q = require('node_modules/q/q.js');
-require('script/lightbox.js');
+var handlebars = require('../node_modules/handlebars/dist/handlebars.js');
+var q = require('../node_modules/q/q.js');
+require('../script/lightbox.js');
 
 function loader(album) {
 	function loadPage() {

@@ -1,5 +1,5 @@
-var constants = require('script/constants').constants();
-var loader = require('script/start-page');
+var constants = require('../script/constants').constants();
+var loader = require('../script/start-page');
 
 var registrator = function() {
 	function loadPage() {
