@@ -5,9 +5,11 @@ var userUpdate = require('script/update-user');
 var q = require('node_modules/q/q.js');
 
 var login = function() {
-	$('#add-new-album').hide();
 
-	$.ajax('../html/login.html', {
+	function loadPage() {
+		$('#add-new-album').hide();
+
+		$.ajax('../html/login.html', {
 			type: 'GET',
 			timeout: 5000,
 			contentType: 'text/html',
@@ -22,8 +24,8 @@ var login = function() {
 			error: function(error) {
 				console.log(error.message);
 			}
-		})
-		.then(appendEventsToButtons);
+		}).then(appendEventsToButtons);
+	}
 
 	function appendEventsToButtons() {
 		$('#button-back').click(function() {
@@ -43,19 +45,22 @@ var login = function() {
 		var user = new Parse.User();
 
 		Parse.User.logIn(username, password, {
-				success: function(user) {
-					console.log('Successful logIn');
-					$('#login-container').fadeOut(constants.FADEOUT_TIME, userHomePage.loader('#wrapper'));
+			success: function(user) {
+				console.log('Successful logIn');
+				$('#login-container').fadeOut(constants.FADEOUT_TIME, userHomePage.loader('#wrapper'));
 
-				},
-				error: function(user, error) {
-					var $errorContainer = $('<p>');
+			},
+			error: function(user, error) {
+				var $errorContainer = $('<p>');
 
-					$('#password-input-error').show();
-					$('#password-input-error').fadeOut(7000);
-				}
-			})
-			.then(userUpdate.updateCurrentUser);
+				$('#password-input-error').show();
+				$('#password-input-error').fadeOut(7000);
+			}
+		}).then(userUpdate.updateCurrentUser);
+	}
+
+	return {
+		loadPage, logUser
 	}
 }
 

@@ -23,31 +23,13 @@ var loadStartPage = function() {
 		$('#add-new-album').hide();
 	}
 
-	// $.ajax('../html/start-page.html', {
-	// 	type: 'GET',
-	// 	timeout: 5000,
-	// 	contentType: 'text/html',
-	// 	success: function (response) {
-	// 		$('#wrapper').empty();
-	// 		$('#wrapper').append(response);
-	// 		$('#start-page').hide();
-	// 		$('#start-page').fadeIn(constants.FADEIN_TIME);
-	// 	},
-	// 	error: function (err) {
-	// 		console.log('Error while loading start-page window')
-	// 	}
-	// })
-	// 	.then(appendEventsToButtons)
-	// 	.then(appendEventToLogoutButton);
-
-
 	function appendEventsToButtons() {
 		$('#button-register-dialog').on('click', function() {
 			registrator.registrator();
 		});
 
 		$('#button-login-dialog').on('click', function() {
-			login.login();
+			login.login().loadPage();
 		});
 
 		$('#button-logout').on('click', function() {
