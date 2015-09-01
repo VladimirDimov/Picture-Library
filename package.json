@@ -11,5 +11,8 @@
     "node-less": "^1.0.0",
     "q": "^1.4.1",
     "systemjs": "^0.18.16"
+  },
+  "scripts": {
+    "test": "mocha"
   }
 }
