@@ -62,7 +62,8 @@ var registrator = function() {
 	}
 
 	return {
-		loadPage, registerUser
+		loadPage: loadPage,
+		registerUser: registerUser
 	}
 };
 
