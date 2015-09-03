@@ -8,7 +8,7 @@ function loader(album) {
 			type: 'GET',
 			timeout: 5000,
 			contentType: 'text/html',
-			success: function(response) {
+			success: function (response) {
 				$('#album-container').empty();
 
 				$('#album-container').append(response);
@@ -17,14 +17,14 @@ function loader(album) {
 
 				getImages(album);
 			},
-			error: function(error) {
+			error: function (error) {
 				throw new Error('Unable to find html file: album-content.html');
 			}
 		}).then(appendEventhandlers);
 	}
 
 	function appendEventhandlers() {
-		$('#btn-upload-image').click(function() {
+		$('#btn-upload-image').click(function () {
 			var fileElement = $('#btn-add-image')[0];
 			var filePath = $('#btn-add-image').val();
 			var fileName = filePath.split('\\').pop();
@@ -39,13 +39,13 @@ function loader(album) {
 
 			var newFile = new Parse.File(fileName, file);
 			newFile.save({
-				success: function() {
+				success: function () {
 					console.log('File successfully uploaded!');
 				},
-				error: function(err) {
+				error: function (err) {
 					console.log(err.message);
 				}
-			}).then(function(uploadedFile) {
+			}).then(function (uploadedFile) {
 				var Image = Parse.Object.extend('Image');
 				var newImage = new Image();
 				var imageTitle = fileName.split('.')[0];
@@ -53,18 +53,18 @@ function loader(album) {
 				newImage.set('title', imageTitle);
 				newImage.set('file', uploadedFile);
 				newImage.save({
-					success: function() {
+					success: function () {
 						console.log('File successfully uploaded!');
 						var relation = fileAlbum.relation('images');
 						relation.add(newImage);
 						fileAlbum.save({
-							success: function() {
+							success: function () {
 								$('#thumbnails-container').empty();
 								getImages(fileAlbum);
 							}
 						});
 					},
-					error: function(err) {
+					error: function (err) {
 						console.log(err.message);
 					}
 				});
@@ -79,10 +79,10 @@ function loader(album) {
 		query.equalTo("objectId", id);
 
 		query.first({
-			success: function(result) {
+			success: function (result) {
 				return result;
 			},
-			error: function(object, error) {
+			error: function (object, error) {
 				console.log(error, message);
 			}
 		});
@@ -93,7 +93,7 @@ function loader(album) {
 		var query = relation.query();
 
 		query.find({
-			success: function(list) {
+			success: function (list) {
 				// list contains all images of the current album
 				appendImagesToContainer(list);
 			}
@@ -101,16 +101,27 @@ function loader(album) {
 	}
 
 	function appendImagesToContainer(images) {
-		var source = $('#thumbnail').html();
-		var template = handlebars.compile(source);
-		images = images.map(function(item) {
+		var data,
+			source = $('#thumbnail').html(),
+			template = handlebars.compile(source);
+
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/bg_BG/sdk.js#xfbml=1&version=v2.4";
+			fjs.parentNode.insertBefore(js, fjs);
+		} (document, 'script', 'facebook-jssdk'));
+
+		images = images.map(function (item) {
 			var modifiedItem = {};
 			modifiedItem.location = item._serverData.file.url();
 			modifiedItem.title = item._serverData.title;
 			modifiedItem.objectId = item.id;
 			return modifiedItem;
 		});
-		var data = {};
+
+		data = {};
 		data.images = images;
 		$('#thumbnails-container').empty();
 		$('#thumbnails-container').append(template(data));
@@ -121,18 +132,18 @@ function loader(album) {
 	}
 
 	function appendHandlersToDeleteImageButtons() {
-		$('.delete-image').click(function(ev) {
+		$('.delete-image').click(function (ev) {
 			ev.stopPropagation();
 			var $target = $(ev.target);
 			$target.next().fadeIn(1000);
 		});
 
-		$('.delete-image-cancel').click(function(ev) {
+		$('.delete-image-cancel').click(function (ev) {
 			var $target = $(ev.target);
 			$target.parent().fadeOut(500);
 		});
 
-		$('.delete-image-yes').click(function(ev) {
+		$('.delete-image-yes').click(function (ev) {
 			var $target = $(ev.target);
 			var imageId = $target.parent().next().attr('objectId');
 
@@ -144,20 +155,20 @@ function loader(album) {
 		var Image = Parse.Object.extend("Image");
 		var query = new Parse.Query(Image);
 		query.select("objectId", imageId);
-		query.find().then(function(results) {
+		query.find().then(function (results) {
 			var imageToDelete = results[0];
 
 			imageToDelete.destroy({
-				success: function() {
-					q.fcall(function() {
+				success: function () {
+					q.fcall(function () {
 						var relation = album.relation("images");
 						relation.remove(imageToDelete);
 						album.save();
-					}).then(function() {
+					}).then(function () {
 						getImages(album);
 					}).done();
 				},
-				error: function(err) {
+				error: function (err) {
 					throw new Error('Could not delete image');
 				}
 			});
@@ -165,7 +176,7 @@ function loader(album) {
 	}
 
 	return {
-		loadPage: loadPage, 
+		loadPage: loadPage,
 		deleteImage: deleteImage
 	}
 }
